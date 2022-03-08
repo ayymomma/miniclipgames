@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QFrame, QVBoxLayout
 from customWidgets.frames.focusGamesFrame import FocusGames
 from customWidgets.frames.normalGamesFrame import NormalGames
 from customWidgets.frames.speakGamesFrame import SpeakGames
+from customWidgets.games.ticTacToe.ticTacToe import TicTacToe
 
 
 class GamesFrame(QFrame):
@@ -13,10 +14,12 @@ class GamesFrame(QFrame):
         self.speakGames = SpeakGames(self)
         self.focusGames = FocusGames(self)
         self.verticalGamesFrame = QVBoxLayout()
+        self.ticTacToeGame = TicTacToe(self)
 
         self.setupUi()
 
     def setupUi(self):
+        self.setStyleSheet("background-color: #21252B")
         self.setGeometry(QRect(470, 120, 1420, 820))
 
         # setting layout
