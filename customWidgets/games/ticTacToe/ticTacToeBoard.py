@@ -4,27 +4,28 @@ from PyQt5.QtWidgets import QFrame, QGridLayout, QPushButton
 from customWidgets.games.ticTacToe.ticTacToeCell import TicTacToeCell
 
 style = """
-QPushButton {
+QPushButton {{
     width: 160px;
     height: 160px;
     border-style: solid;
     border-width: 2px;
-    border-color: #606368;
-    background-color: #30363F;
-}
+    border-color: {secondary_color};
+    background-color: {primary_variant_color};
+}}
 """
 
 
 class TicTacToeBoard(QFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, theme):
         super(TicTacToeBoard, self).__init__(parent)
         self.layout = QGridLayout()
         self.cells = []
-        self.setupUi()
+        self.setupUi(theme)
 
-    def setupUi(self):
+    def setupUi(self, theme):
         self.setGeometry(QRect(20, 40, 560, 510))
-        self.setStyleSheet(style)
+        self.setStyleSheet(style.format(primary_variant_color=theme['primary-variant'],
+                                        secondary_color=theme['secondary']))
         [self.cells.append(TicTacToeCell(self)) for i in range(9)]
         self.layout.addWidget(self.cells[0], 0, 0)
         self.layout.addWidget(self.cells[1], 0, 1)

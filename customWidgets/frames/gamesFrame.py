@@ -8,18 +8,17 @@ from customWidgets.games.ticTacToe.ticTacToe import TicTacToe
 
 
 class GamesFrame(QFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, theme):
         super(GamesFrame, self).__init__(parent)
-        self.normalGames = NormalGames(self)
-        self.speakGames = SpeakGames(self)
-        self.focusGames = FocusGames(self)
+        self.normalGames = NormalGames(self, theme)
+        self.speakGames = SpeakGames(self, theme)
+        self.focusGames = FocusGames(self, theme)
         self.verticalGamesFrame = QVBoxLayout()
-        self.ticTacToeGame = TicTacToe(self)
+        self.ticTacToeGame = TicTacToe(self, theme)
 
         self.setupUi()
 
     def setupUi(self):
-        self.setStyleSheet("background-color: #21252B")
         self.setGeometry(QRect(470, 120, 1420, 820))
 
         # setting layout
