@@ -6,7 +6,7 @@ QFrame {{
    background-color: {primary_color};
    border-radius: 10px;
    border-style: None;
-   max-width: 300px;
+   max-width: 280px;
 }}
 """
 
