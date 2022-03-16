@@ -14,14 +14,15 @@ class GamesFrame(QFrame):
         self.speakGames = SpeakGames(self, theme)
         self.focusGames = FocusGames(self, theme)
         self.verticalGamesFrame = QVBoxLayout()
-        self.ticTacToeGame = TicTacToe(self, theme)
+        # self.ticTacToeGame = TicTacToe(self, theme)
 
         self.setupUi()
 
     def setupUi(self):
-        self.setGeometry(QRect(470, 120, 1420, 820))
+        self.setGeometry(QRect(470, 40, 1420, 1000))
 
         # setting layout
+        self.verticalGamesFrame.setSpacing(10)
         self.verticalGamesFrame.addWidget(self.normalGames)
         self.verticalGamesFrame.addWidget(self.speakGames)
         self.verticalGamesFrame.addWidget(self.focusGames)

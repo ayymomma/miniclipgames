@@ -1,9 +1,10 @@
 {
   "primary" : "#21252B",
   "primary-variant" :  "#30363F",
-  "secondary" : "#90A4AE",
-  "secondary-variant" : "#CFD8DC",
+  "secondary" : "#6200EE",
+  "secondary-variant" : "#3700B3",
   "error" : "#B00020",
   "on-error" : "#FFFFFF",
-  "on-primary": "#FFFFFF"
+  "on-primary": "#FFFFFF",
+  "on-secondary": "#FFFFFF"
 }

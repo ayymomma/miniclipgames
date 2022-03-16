@@ -20,4 +20,4 @@ class SpeakGames(QFrame):
 
     def setupUi(self, theme):
         self.setStyleSheet(style.format(primary_variant_color=theme['primary-variant'],
-                                        secondary_color=theme['secondary']))
+                                        secondary_color=theme['secondary-variant']))
