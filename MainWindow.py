@@ -24,7 +24,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.centralWidget = QtWidgets.QWidget(self)
-        self.theme = self.readTheme()
+        self.theme = None
+        self.readTheme()
         self.gamesFrame = GamesFrame(self.centralWidget, self.theme)
         self.bottomButtons = BottomButtons(self.centralWidget, self.theme)
         self.logoLabel = QLabel(self.centralWidget)
@@ -53,8 +54,8 @@ class MainWindow(QMainWindow):
 
     def readTheme(self):
         with open('customWidgets/themes/theme.json', 'r') as f:
-            json_theme = json.load(f)
-        return json_theme
+            self.theme = json.load(f)
+
 
     @QtCore.pyqtSlot()
     def onExitClick(self):

@@ -21,4 +21,4 @@ class FocusGames(QFrame):
     def setupUi(self, theme):
         self.setStyleSheet(
             style.format(primary_variant_color=theme['primary-variant'],
-                         secondary_color=theme['secondary-variant']))
+                         secondary_color=theme['secondary']))
