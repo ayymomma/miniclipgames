@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QPushButton
 
 style = """
@@ -19,9 +20,11 @@ QPushButton:pressed {{
 
 
 class SettingsButton(QPushButton):
+    click_signal = pyqtSignal()
+
     def __init__(self, parent):
         super(SettingsButton, self).__init__(parent)
-
+        self.clicked.connect(self.onClick)
         self.setupUi()
 
     def setupUi(self):
@@ -31,3 +34,6 @@ class SettingsButton(QPushButton):
         self.setStyleSheet(style.format(secondary_color=background_color,
                                         on_secondary=on_secondary,
                                         secondary_variant_color=hover_color))
+
+    def onClick(self):
+        self.click_signal.emit()

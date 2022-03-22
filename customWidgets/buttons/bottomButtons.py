@@ -8,6 +8,7 @@ from customWidgets.buttons.settingsButton import SettingsButton
 
 class BottomButtons(QFrame):
     exit_click_signal = pyqtSignal()
+    settings_click_signal = pyqtSignal()
 
     def __init__(self, parent, theme):
         super(BottomButtons, self).__init__(parent)
@@ -24,6 +25,7 @@ class BottomButtons(QFrame):
         self.exitButton.setButtonStyle(theme['secondary'], theme['on-secondary'], theme['secondary-variant'])
         self.exitButton.click_signal.connect(lambda: self.onExitClick())
         self.settingsButton.setButtonStyle(theme['secondary'], theme['on-secondary'], theme['secondary-variant'])
+        self.settingsButton.click_signal.connect(lambda: self.onSettingsClick())
 
         self.buttonsLayout.addWidget(self.exitButton)
         self.buttonsLayout.addWidget(self.settingsButton)
@@ -32,4 +34,8 @@ class BottomButtons(QFrame):
     @QtCore.pyqtSlot()
     def onExitClick(self):
         self.exit_click_signal.emit()
+
+    @QtCore.pyqtSlot()
+    def onSettingsClick(self):
+        self.settings_click_signal.emit()
 
