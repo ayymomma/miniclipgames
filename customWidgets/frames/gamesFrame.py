@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import QRect, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QVBoxLayout
 
 from customWidgets.frames.focusGamesFrame import FocusGames
@@ -8,6 +8,8 @@ from customWidgets.games.ticTacToe.ticTacToe import TicTacToe
 
 
 class GamesFrame(QFrame):
+    onGameClick_signal = pyqtSignal()
+
     def __init__(self, parent, theme):
         super(GamesFrame, self).__init__(parent)
         self.normalGames = NormalGames(self, theme)
@@ -20,6 +22,7 @@ class GamesFrame(QFrame):
 
     def setupUi(self):
         self.setGeometry(QRect(470, 40, 1420, 1000))
+        self.normalGames.onTicTacToeClick_signal.connect(lambda: self.onGameClick())
 
         # setting layout
         self.verticalGamesFrame.setSpacing(10)
@@ -27,3 +30,6 @@ class GamesFrame(QFrame):
         self.verticalGamesFrame.addWidget(self.speakGames)
         self.verticalGamesFrame.addWidget(self.focusGames)
         self.setLayout(self.verticalGamesFrame)
+
+    def onGameClick(self):
+        self.onGameClick_signal.emit()

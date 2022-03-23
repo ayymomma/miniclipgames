@@ -9,7 +9,7 @@ QPushButton {{
     height: 160px;
     border-style: solid;
     border-width: 2px;
-    border-color: {secondary_color};
+    border-color: {primary_second_variant};
     background-color: {primary_variant_color};
 }}
 """
@@ -25,7 +25,7 @@ class TicTacToeBoard(QFrame):
     def setupUi(self, theme):
         self.setGeometry(QRect(20, 40, 560, 510))
         self.setStyleSheet(style.format(primary_variant_color=theme['primary-variant'],
-                                        secondary_color=theme['secondary']))
+                                        primary_second_variant=theme['primary-second-variant']))
         [self.cells.append(TicTacToeCell(self)) for i in range(9)]
         self.layout.addWidget(self.cells[0], 0, 0)
         self.layout.addWidget(self.cells[1], 0, 1)

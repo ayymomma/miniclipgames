@@ -5,6 +5,12 @@ import threading
 
 
 class AudioManager:
+    def __init__(self):
+        self.mouseClickSound = os.getcwd() + "\\resources\\audio\\mouse_click.wav"
+        self.ticTacToeSound = os.getcwd() + "\\resources\\audio\\ticTacToeSound.wav"
+
     def playSoundButtonClick(self):
-        soundName = os.getcwd() + "\\resources\\audio\\mouse_click.wav"
-        threading.Thread(target=playsound, args=(soundName,), daemon=True).start()
+        threading.Thread(target=playsound, args=(self.mouseClickSound, ), daemon=True).start()
+
+    def ticTacToePlaySound(self):
+        threading.Thread(target=playsound, args=(self.ticTacToeSound, ), daemon=True).start()

@@ -1,4 +1,5 @@
-from PyQt5 import Qt
+from PyQt5 import Qt, QtGui
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDialog, QLabel, QPushButton
 
@@ -23,5 +24,4 @@ class TicTacToe(QDialog):
         self.setMinimumSize(600, 800)
         self.setStyleSheet(style.format(primary_color=theme['primary']))
         self.show()
-
 

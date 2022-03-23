@@ -1,16 +1,15 @@
-import os
 import sys
 import json
+import time
 
 from PyQt5 import Qt, QtWidgets, QtCore
-from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox
 
 from Audio.audioManager import AudioManager
 from customWidgets.buttons.bottomButtons import BottomButtons
 from customWidgets.frames.gamesFrame import GamesFrame
-
+from customWidgets.games.ticTacToe.ticTacToeBoard import TicTacToeBoard
 
 style = """
 QMainWindow {{
@@ -67,6 +66,7 @@ class MainWindow(QMainWindow):
 
         self.bottomButtons.exit_click_signal.connect(lambda: self.onExitClick())
         self.bottomButtons.settings_click_signal.connect(lambda: self.onSettingsClick())
+        self.gamesFrame.onGameClick_signal.connect(lambda: self.onGameClick())
 
         font = QFont("Helvetica")
         font.setWeight(30)
@@ -92,12 +92,19 @@ class MainWindow(QMainWindow):
         quit_message = "Are you sure you want to exit?"
         if QMessageBox.question(self, ' ',
                                 quit_message, QMessageBox.Yes, QMessageBox.No) == QMessageBox.Yes:
+            self.audioManager.playSoundButtonClick()
+            time.sleep(0.2)
             sys.exit(0)
+        else:
+            self.audioManager.playSoundButtonClick()
 
     @QtCore.pyqtSlot()
     def onSettingsClick(self):
         self.audioManager.playSoundButtonClick()
 
+    @QtCore.pyqtSlot()
+    def onGameClick(self):
+        self.audioManager.playSoundButtonClick()
 
 
 if __name__ == '__main__':
