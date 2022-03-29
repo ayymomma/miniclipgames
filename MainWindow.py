@@ -1,7 +1,9 @@
+import os
 import sys
 import json
 import time
 
+import psutil as psutil
 from PyQt5 import Qt, QtWidgets, QtCore
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox
@@ -9,7 +11,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox
 from Audio.audioManager import AudioManager
 from customWidgets.buttons.bottomButtons import BottomButtons
 from customWidgets.frames.gamesFrame import GamesFrame
-from customWidgets.games.ticTacToe.ticTacToeBoard import TicTacToeBoard
 
 style = """
 QMainWindow {{
@@ -80,7 +81,14 @@ class MainWindow(QMainWindow):
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Qt.Key_Escape:
-            sys.exit(0)
+            quit_message = "Are you sure you want to exit?"
+            if QMessageBox.question(self, ' ',
+                                    quit_message, QMessageBox.Yes, QMessageBox.No) == QMessageBox.Yes:
+                self.audioManager.playSoundButtonClick()
+                time.sleep(0.2)
+                sys.exit(0)
+            else:
+                self.audioManager.playSoundButtonClick()
 
     def readTheme(self):
         with open('customWidgets/themes/theme.json', 'r') as f:
@@ -107,8 +115,17 @@ class MainWindow(QMainWindow):
         self.audioManager.playSoundButtonClick()
 
 
+def kill_proc_tree(pid, including_parent=True):
+    parent = psutil.Process(pid)
+    if including_parent:
+        parent.kill()
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     mini = MainWindow()
     mini.show()
-    sys.exit(app.exec())
+    returnValue = app.exec()
+    if returnValue is not None:
+        kill_proc_tree(os.getpid())
+        sys.exit(returnValue)

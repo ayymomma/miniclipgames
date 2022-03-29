@@ -1,4 +1,9 @@
-from PyQt5.QtWidgets import QFrame, QGraphicsBlurEffect
+from PyQt5 import QtCore
+from PyQt5.QtCore import QRect, pyqtSignal
+from PyQt5.QtWidgets import QFrame, QGraphicsBlurEffect, QHBoxLayout
+
+from customWidgets.games.ticTacToe.ticTacToe import TicTacToe
+from customWidgets.games.ticTacToe.ticTacToeFrame import TicTacToeFrame
 
 style = """
 QFrame {{
@@ -10,16 +15,40 @@ QFrame {{
 
 
 class FocusGames(QFrame):
+    onTicTacToeClick_signal = pyqtSignal()
+
     def __init__(self, parent, theme):
         super(FocusGames, self).__init__(parent)
         self.setStyleSheet(style)
-        self.blur_effect = QGraphicsBlurEffect()
 
-        self.setupUi(theme)
+        self.gamesLayout = QHBoxLayout()
+        self.ticTacToeFrame = TicTacToeFrame(self, theme)
+        self.ticTacToeFrame1 = TicTacToeFrame(self, theme)
+        self.ticTacToeFrame2 = TicTacToeFrame(self, theme)
+        self.ticTacToeFrame3 = TicTacToeFrame(self, theme)
 
-    def setupUi(self, theme):
+        self.ticTacToe = None
+
+        self.setupUi(theme, parent)
+
+    def setupUi(self, theme, parent):
         self.setStyleSheet(
             style.format(primary_variant_color=theme['primary-variant'],
                          secondary_color=theme['secondary']))
-        self.blur_effect.setBlurRadius(1.4)
-        self.setGraphicsEffect(self.blur_effect)
+
+        self.gamesLayout.setGeometry(QRect(0, 0, self.width(), self.height()))
+        self.gamesLayout.addWidget(self.ticTacToeFrame)
+        self.gamesLayout.addWidget(self.ticTacToeFrame1)
+        self.gamesLayout.addWidget(self.ticTacToeFrame2)
+        self.gamesLayout.addWidget(self.ticTacToeFrame3)
+        self.setLayout(self.gamesLayout)
+
+        self.ticTacToeFrame.click_signal.connect(lambda: self.onTicTacToeClick(parent, theme))
+        self.ticTacToeFrame1.click_signal.connect(lambda: self.onTicTacToeClick(parent, theme))
+        self.ticTacToeFrame2.click_signal.connect(lambda: self.onTicTacToeClick(parent, theme))
+        self.ticTacToeFrame3.click_signal.connect(lambda: self.onTicTacToeClick(parent, theme))
+
+    @QtCore.pyqtSlot()
+    def onTicTacToeClick(self, parent, theme):
+        self.ticTacToe = TicTacToe(parent, theme)
+        self.onTicTacToeClick_signal.emit()

@@ -2,8 +2,8 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QRect, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QHBoxLayout, QGraphicsBlurEffect
 
-from customWidgets.games.ticTacToe.TicTacToeFrame import TicTacToeFrame
 from customWidgets.games.ticTacToe.ticTacToe import TicTacToe
+from customWidgets.games.ticTacToe.ticTacToeFrame import TicTacToeFrame
 
 style = """
 QFrame {{
@@ -27,20 +27,17 @@ class NormalGames(QFrame):
         self.ticTacToeFrame2 = TicTacToeFrame(self, theme)
         self.ticTacToeFrame3 = TicTacToeFrame(self, theme)
 
-        # self.ticTacToe = TicTacToe(parent, theme)
-        # self.ticTacToe.hide()
         self.ticTacToe = None
 
-        self.blur_effect = QGraphicsBlurEffect()
+        # self.blur_effect = QGraphicsBlurEffect()
 
         self.setupUi(parent, theme)
 
     def setupUi(self, parent, theme):
         self.setStyleSheet(style.format(primary_variant_color=theme['primary-variant'],
                                         primary_secondary_variant=theme['primary-second-variant']))
-        self.blur_effect.setBlurRadius(1.5)
-        self.setGraphicsEffect(self.blur_effect)
-        self.gamesLayout.setContentsMargins(0, 20, 0, 20)
+        # self.blur_effect.setBlurRadius(1.5)
+        # self.setGraphicsEffect(self.blur_effect)
         self.gamesLayout.setGeometry(QRect(0, 0, self.width(), self.height()))
         self.gamesLayout.addWidget(self.ticTacToeFrame)
         self.gamesLayout.addWidget(self.ticTacToeFrame1)
@@ -55,5 +52,5 @@ class NormalGames(QFrame):
 
     @QtCore.pyqtSlot()
     def onTicTacToeClick(self, parent, theme):
-        self.ticTacToe = TicTacToe(parent, theme)
+        self.ticTacToe = TicTacToe(parent)
         self.onTicTacToeClick_signal.emit()

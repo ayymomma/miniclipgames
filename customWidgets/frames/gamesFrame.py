@@ -23,6 +23,8 @@ class GamesFrame(QFrame):
     def setupUi(self):
         self.setGeometry(QRect(470, 40, 1420, 1000))
         self.normalGames.onTicTacToeClick_signal.connect(lambda: self.onGameClick())
+        self.focusGames.onTicTacToeClick_signal.connect(lambda: self.onGameClick())
+        self.speakGames.onTicTacToeClick_signal.connect(lambda: self.onGameClick())
 
         # setting layout
         self.verticalGamesFrame.setSpacing(10)
