@@ -28,7 +28,7 @@ QMessageBox QPushButton {{
     background-color: {secondary_color};
     color: {on_secondary};
     font-size: 18px;
-    border-radius: 5px;
+    border-radius: 15px;
     min-height: 30px;
     min-width: 60px;
     margin-left: 10px;
@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         font.setBold(True)
         self.logoLabel.setFont(font)
         self.logoLabel.setText("MINICLIP")
-        self.logoLabel.setGeometry(40, 70, 400, 70)
+        self.logoLabel.setGeometry(60, 70, 400, 70)
         self.logoLabel.setStyleSheet("color: {0}".format(self.theme['on-primary']))
         self.showFullScreen()
 

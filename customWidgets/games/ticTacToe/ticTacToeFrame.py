@@ -32,17 +32,6 @@ class TicTacToeFrame(QFrame):
 
     def setupUi(self, theme):
         self.setStyleSheet(style)
-        # self.setMinimumSize(QtCore.QSize(280, 280))
-        # self.setMaximumSize(QtCore.QSize(280, 280))
-        # font = QFont("Helvetica")
-        # font.setWeight(30)
-        # font.setPixelSize(30)
-        # font.setBold(True)
-        # self.textLabel.setFont(font)
-        # self.textLabel.setText("TIC TAC TOE")
-        # self.textLabel.setGeometry(45, 120, 190, 50)
-        # self.textLabel.setStyleSheet("color: {0}".format(theme['on-primary']))
-
         pixmap = QPixmap("resources\\images\\ticTacToe2.png")
         self.image.setPixmap(pixmap)
         self.image.setScaledContents(True)
