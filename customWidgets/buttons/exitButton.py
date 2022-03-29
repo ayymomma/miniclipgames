@@ -1,5 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QPushButton
 
 style = """
@@ -8,6 +9,8 @@ QPushButton {{
     color: {on_secondary};
     font-size: 18px;
     border-radius: 25px;
+    border: 2px solid;
+    border-color: {border_color};
 }}
 QPushButton:pressed {{
     background-color: {secondary_color};
@@ -24,14 +27,19 @@ class ExitButton(QPushButton):
         self.setupUi()
 
     def setupUi(self):
+        font = QFont("Helvetica")
+        font.setWeight(30)
+        font.setPixelSize(80)
+        font.setBold(True)
+        self.setFont(font)
         self.setText("QUIT")
         self.setMinimumSize(150, 50)
         self.setMaximumSize(150, 50)
 
-    def setButtonStyle(self, background_color, on_secondary, hover_color):
+    def setButtonStyle(self, background_color, on_secondary, border_color):
         self.setStyleSheet(style.format(secondary_color=background_color,
                                         on_secondary=on_secondary,
-                                        secondary_variant_color=hover_color))
+                                        border_color=border_color))
 
     def enterEvent(self, event: QtCore.QEvent):
         super(ExitButton, self).enterEvent(event)

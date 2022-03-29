@@ -22,13 +22,12 @@ class BottomButtons(QFrame):
         self.setGeometry(QRect(60, 950, 400, 70))
         # self.buttonsLayout.setSpacing(70)
 
-        self.exitButton.setButtonStyle(theme['secondary'], theme['on-secondary'], theme['secondary-variant'])
+        self.exitButton.setButtonStyle(theme['secondary'], theme['on-secondary'], theme['border-color'])
         self.exitButton.setGeometry(QRect(10, 10, 150, 50))
         self.exitButton.click_signal.connect(lambda: self.onExitClick())
-        self.settingsButton.setButtonStyle(theme['secondary'], theme['on-secondary'], theme['secondary-variant'])
+        self.settingsButton.setButtonStyle(theme['secondary'], theme['on-secondary'], theme['border-color'])
         self.settingsButton.setGeometry(QRect(240, 10, 150, 50))
         self.settingsButton.click_signal.connect(lambda: self.onSettingsClick())
-
         # self.buttonsLayout.addWidget(self.exitButton)
         # self.buttonsLayout.addWidget(self.settingsButton)
         # self.setLayout(self.buttonsLayout)

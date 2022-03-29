@@ -1,11 +1,14 @@
 {
   "error": "#B00020",
   "on-error": "#FFFFFF",
+  "x-color": "rgba(235, 23, 81)",
+  "o-color": "rgba(255, 208, 50)",
   "on-primary": "#FFFFFF",
   "on-secondary": "#FFFFFF",
   "primary": "qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(31, 16, 80, 255), stop:1 rgba(62, 42, 161, 255))",
   "primary-variant": "qradialgradient(spread:pad, cx:0.499852, cy:0.5, radius:0.477, fx:0.501, fy:0.499, stop:0 rgba(52, 35, 104, 255), stop:1 rgba(39, 22, 100, 255))",
-  "primary-second-variant": "#4C505E",
-  "secondary": "qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(85, 47, 208, 255), stop:1 rgba(228, 86, 248, 255))",
-  "secondary-variant": "rgba(83, 43, 214, 255)"
+  "primary-second-variant": "rgba(51, 33, 103, 255)",
+  "secondary": "rgba(85, 47, 208, 255)",
+  "secondary-variant": "rgba(102, 72, 197, 255)",
+  "border-color": "rgba(162, 85, 232, 255)"
 }

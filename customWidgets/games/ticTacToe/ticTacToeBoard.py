@@ -1,38 +1,44 @@
 import random
 
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import QRect, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QGridLayout, QPushButton
 
+from Audio.audioManager import AudioManager
 from customWidgets.games.ticTacToe.ticTacToeCell import TicTacToeCell
 
 style = """
 QPushButton {{
-    width: 160px;
-    height: 160px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: {primary_second_variant};
-    background-color: {primary_variant_color};
+    max-width: 160px;
+    max-height: 160px;
+    background-color: {primary_second_variant};
+    border-radius: 15px;
+}}
+QFrame {{
+    border-radius: 15px;
+    background-color: {secondary_variant};
 }}
 """
 
 
 class TicTacToeBoard(QFrame):
+    win_signal = pyqtSignal(str)
+    reset_signal = pyqtSignal()
+
     def __init__(self, parent, theme):
         super(TicTacToeBoard, self).__init__(parent)
         self.layout = QGridLayout()
         self.cells = []
         self.freeCells = []
-        self.winner = ""
+        self.winner = None
+        self.audioManager = AudioManager()
         self.setupUi(theme)
 
-
     def setupUi(self, theme):
-        self.setGeometry(QRect(20, 40, 560, 510))
-        self.setStyleSheet(style.format(primary_variant_color=theme['primary-variant'],
-                                        primary_second_variant=theme['primary-second-variant']))
+        self.setGeometry(QRect(20, 240, 560, 560))
+        self.setStyleSheet(style.format(primary_second_variant=theme['primary-second-variant'],
+                                        secondary_variant=theme['secondary-variant']))
         for i in range(9):
-            self.cells.append(TicTacToeCell(self, i))
+            self.cells.append(TicTacToeCell(self, i, theme))
             self.cells[i].click_signal.connect(lambda value: self.buttonClick(value))
             self.freeCells.append(i)
 
@@ -48,29 +54,34 @@ class TicTacToeBoard(QFrame):
         self.setLayout(self.layout)
 
     def reset(self):
+        self.audioManager.playSoundButtonClick()
         self.freeCells = []
-        self.winner = ""
+        self.winner = None
+        self.reset_signal.emit()
         for i in range(len(self.cells)):
             self.cells[i].reset()
             self.freeCells.append(i)
 
     def disable(self):
+        self.win_signal.emit(self.winner)
         for i in range(len(self.cells)):
             self.cells[i].setEnabled(False)
 
     def buttonClick(self, index):
         self.cells[index].capture("X")
         self.freeCells.remove(index)
+
         if self.evaluateBoard():
             self.disable()
-            print(self.winner)
-        elif self.hasFreeCells():
+        elif self.freeCells:
             computerIndex = random.choice(self.freeCells)
             self.cells[computerIndex].capture("O")
             self.freeCells.remove(computerIndex)
+            if self.evaluateBoard():
+                self.disable()
         else:
-            print("Tie")
-
+            self.disable()
+            self.winner = "Tie"
 
     def evaluateBoard(self):
         if self.evaluateCells(self.cells[0], self.cells[1], self.cells[2]) or \

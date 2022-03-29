@@ -4,7 +4,12 @@ from playsound import playsound
 import threading
 
 
-class AudioManager:
+class AudioManager(object):
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(AudioManager, cls).__new__(cls)
+        return cls.instance
+
     def __init__(self):
         self.mouseClickSound = os.getcwd() + "\\resources\\audio\\mouse_click.wav"
         self.ticTacToeSound = os.getcwd() + "\\resources\\audio\\ticTacToeSound.wav"

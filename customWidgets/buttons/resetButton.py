@@ -18,11 +18,11 @@ QPushButton:pressed {{
 """
 
 
-class SettingsButton(QPushButton):
+class ResetButton(QPushButton):
     click_signal = pyqtSignal()
 
     def __init__(self, parent):
-        super(SettingsButton, self).__init__(parent)
+        super(ResetButton, self).__init__(parent)
         self.clicked.connect(self.onClick)
         self.setupUi()
 
@@ -32,7 +32,7 @@ class SettingsButton(QPushButton):
         font.setPixelSize(80)
         font.setBold(True)
         self.setFont(font)
-        self.setText("SETTINGS")
+        self.setText("RESET")
         self.setMinimumSize(150, 50)
         self.setMaximumSize(150, 50)
 
@@ -42,13 +42,13 @@ class SettingsButton(QPushButton):
                                         border_color=border_color))
 
     def enterEvent(self, event: QtCore.QEvent):
-        super(SettingsButton, self).enterEvent(event)
+        super(ResetButton, self).enterEvent(event)
         self.setMinimumSize(170, 50)
         self.setMaximumSize(170, 50)
         self.setGeometry(self.pos().x() - 10, self.pos().y(), self.width() + 10, self.height())
 
     def leaveEvent(self, event: QtCore.QEvent):
-        super(SettingsButton, self).leaveEvent(event)
+        super(ResetButton, self).leaveEvent(event)
         self.setMinimumSize(150, 50)
         self.setMaximumSize(150, 50)
         self.setGeometry(self.pos().x() + 10, self.pos().y(), self.width() - 10, self.height())
