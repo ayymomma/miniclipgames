@@ -24,4 +24,3 @@ class TicTacToe(QDialog):
         self.setMinimumSize(600, 800)
         self.setStyleSheet(style.format(primary_color=theme['primary']))
         self.show()
-
