@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import threading
 import time
 
 import psutil as psutil
@@ -9,6 +10,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox
 
 from Audio.audioManager import AudioManager
+from Audio.voiceManager import VoiceManager
 from customWidgets.buttons.bottomButtons import BottomButtons
 from customWidgets.frames.gamesFrame import GamesFrame
 
@@ -54,6 +56,7 @@ class MainWindow(QMainWindow):
         self.bottomButtons = BottomButtons(self.centralWidget, self.theme)
         self.logoLabel = QLabel(self.centralWidget)
         self.audioManager = AudioManager()
+        self.voiceManager = VoiceManager()
         self.setCentralWidget(self.centralWidget)
         self.setupUi()
 
