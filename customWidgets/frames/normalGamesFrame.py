@@ -3,8 +3,8 @@ from PyQt5.QtCore import QRect, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QHBoxLayout, QGraphicsBlurEffect
 
 from Audio.audioManager import AudioManager
-from customWidgets.games.ticTacToe.TicTacToeFrame import TicTacToeFrame
 from customWidgets.games.ticTacToe.ticTacToe import TicTacToe
+from customWidgets.games.ticTacToe.ticTacToeFrame import TicTacToeFrame
 
 style = """
 QFrame {{

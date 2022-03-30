@@ -4,6 +4,7 @@ from PyQt5.QtCore import QRect, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QGridLayout, QPushButton
 
 from Audio.audioManager import AudioManager
+from Audio.voiceManager import VoiceManager
 from customWidgets.games.ticTacToe.ticTacToeCell import TicTacToeCell
 
 style = """
@@ -31,6 +32,7 @@ class TicTacToeBoard(QFrame):
         self.freeCells = []
         self.winner = None
         self.audioManager = AudioManager()
+        self.voiceManager = VoiceManager()
         self.setupUi(theme)
 
     def setupUi(self, theme):
@@ -41,6 +43,9 @@ class TicTacToeBoard(QFrame):
             self.cells.append(TicTacToeCell(self, i, theme))
             self.cells[i].click_signal.connect(lambda value: self.buttonClick(value))
             self.freeCells.append(i)
+
+        self.voiceManager.reset_signal.connect(lambda: self.reset())
+        self.voiceManager.cell_position_signal.connect(lambda index: self.buttonClick(index))
 
         self.layout.addWidget(self.cells[0], 0, 0)
         self.layout.addWidget(self.cells[1], 0, 1)

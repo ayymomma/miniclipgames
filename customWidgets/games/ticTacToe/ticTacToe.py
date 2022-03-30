@@ -1,8 +1,11 @@
+import threading
+
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QRect, Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDialog, QLabel, QPushButton
 
+from Audio.voiceManager import VoiceManager
 from customWidgets.buttons.resetButton import ResetButton
 from customWidgets.games.ticTacToe.playerInfo import PlayerInfo
 from customWidgets.games.ticTacToe.ticTacToeBoard import TicTacToeBoard
@@ -30,6 +33,7 @@ class TicTacToe(QDialog):
         self.botInfo = PlayerInfo(self, "B.png", "O", "Bot", theme)
         self.playerState = QLabel(self)
         self.botState = QLabel(self)
+        self.voiceManager = VoiceManager()
         self.setupUi(theme)
 
     def setupUi(self, theme):
@@ -57,11 +61,13 @@ class TicTacToe(QDialog):
     def setWinner(self, value):
         if value == "Player win":
             self.playerState.setText("Winner")
+            threading.Thread(target=self.voiceManager.textToSpeech, args=("Player win", )).start()
             self.botState.setText("Loser")
             return
         if value == "Computer win":
             self.playerState.setText("Loser")
             self.botState.setText("Winner")
+            threading.Thread(target=self.voiceManager.textToSpeech, args=("Computer win", )).start()
             return
         self.playerState.setText("Tie")
         self.botState.setText("Tie")

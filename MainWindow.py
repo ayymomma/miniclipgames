@@ -3,8 +3,8 @@ import sys
 import json
 import threading
 import time
-
 import psutil as psutil
+
 from PyQt5 import Qt, QtWidgets, QtCore
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox
@@ -57,6 +57,8 @@ class MainWindow(QMainWindow):
         self.logoLabel = QLabel(self.centralWidget)
         self.audioManager = AudioManager()
         self.voiceManager = VoiceManager()
+        self.voiceThread = threading.Thread(target=self.voiceManager.start)
+        self.voiceThread.start()
         self.setCentralWidget(self.centralWidget)
         self.setupUi()
 
@@ -84,14 +86,7 @@ class MainWindow(QMainWindow):
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Qt.Key_Escape:
-            quit_message = "Are you sure you want to exit?"
-            if QMessageBox.question(self, ' ',
-                                    quit_message, QMessageBox.Yes, QMessageBox.No) == QMessageBox.Yes:
-                self.audioManager.playSoundButtonClick()
-                time.sleep(0.2)
-                sys.exit(0)
-            else:
-                self.audioManager.playSoundButtonClick()
+            self.onExitClick()
 
     def readTheme(self):
         with open('customWidgets/themes/theme.json', 'r') as f:
@@ -104,6 +99,8 @@ class MainWindow(QMainWindow):
         if QMessageBox.question(self, ' ',
                                 quit_message, QMessageBox.Yes, QMessageBox.No) == QMessageBox.Yes:
             self.audioManager.playSoundButtonClick()
+            self.voiceManager.quitFlag = False
+            print(self.voiceManager.quitFlag)
             time.sleep(0.2)
             sys.exit(0)
         else:
