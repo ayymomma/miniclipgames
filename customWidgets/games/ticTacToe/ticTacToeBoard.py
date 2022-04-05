@@ -45,7 +45,7 @@ class TicTacToeBoard(QFrame):
             self.freeCells.append(i)
 
         self.voiceManager.reset_signal.connect(lambda: self.reset())
-        self.voiceManager.cell_position_signal.connect(lambda index: self.buttonClick(index))
+        # self.voiceManager.cell_position_signal.connect(lambda index: self.buttonClick(index))
 
         self.layout.addWidget(self.cells[0], 0, 0)
         self.layout.addWidget(self.cells[1], 0, 1)

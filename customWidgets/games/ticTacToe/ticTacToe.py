@@ -34,6 +34,7 @@ class TicTacToe(QDialog):
         self.playerState = QLabel(self)
         self.botState = QLabel(self)
         self.voiceManager = VoiceManager()
+        self.voiceManager.cell_position_signal.connect(self.board.buttonClick)
         self.setupUi(theme)
 
     def setupUi(self, theme):

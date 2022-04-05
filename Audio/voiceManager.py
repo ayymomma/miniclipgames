@@ -11,11 +11,6 @@ class VoiceManager(QObject):
     indexList = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
     quitFlag = False
 
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(VoiceManager, cls).__new__(cls)
-        return cls.instance
-
     def __init__(self):
         super(VoiceManager, self).__init__()
         self.recognizer = sr.Recognizer()
@@ -78,7 +73,9 @@ class VoiceManager(QObject):
                 self.textToSpeech(text["transcription"].lower())
                 print(text["transcription"].lower())
                 if text["transcription"].lower() in self.indexList:
+                    print("am intrat in if")
                     self.cell_position_signal.emit(self.indexList.index(text["transcription"].lower()))
+                    print("am iesit din if")
                 if text["transcription"].lower() == 'reset':
                     self.reset_signal.emit()
                 if "stop" in text["transcription"].lower():
