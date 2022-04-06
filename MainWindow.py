@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QMessageBox
 
 from Audio.audioManager import AudioManager
 from Audio.voiceManager import VoiceManager
+from Video.videoManager import VideoManager
 from customWidgets.buttons.bottomButtons import BottomButtons
 from customWidgets.frames.gamesFrame import GamesFrame
 
@@ -57,8 +58,11 @@ class MainWindow(QMainWindow):
         self.logoLabel = QLabel(self.centralWidget)
         self.audioManager = AudioManager()
         self.voiceManager = VoiceManager()
+        self.videoManager = VideoManager()
         self.voiceThread = threading.Thread(target=self.voiceManager.start)
         self.voiceThread.start()
+        self.videoThread = threading.Thread(target=self.videoManager.startStream)
+        self.videoThread.start()
         self.setCentralWidget(self.centralWidget)
         self.setupUi()
 
@@ -100,6 +104,7 @@ class MainWindow(QMainWindow):
                                 quit_message, QMessageBox.Yes, QMessageBox.No) == QMessageBox.Yes:
             self.audioManager.playSoundButtonClick()
             self.voiceManager.quitFlag = False
+            self.videoManager.runFlag = False
             print(self.voiceManager.quitFlag)
             time.sleep(0.2)
             sys.exit(0)
