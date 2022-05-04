@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QFrame, QGridLayout, QPushButton
 
 from Audio.audioManager import AudioManager
 from Audio.voiceManager import VoiceManager
+from customWidgets.buttons.voiceButton import VoiceButton
 from customWidgets.games.ticTacToe.ticTacToeCell import TicTacToeCell
 
 style = """

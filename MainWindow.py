@@ -13,6 +13,8 @@ from Audio.audioManager import AudioManager
 from Audio.voiceManager import VoiceManager
 from Video.videoManager import VideoManager
 from customWidgets.buttons.bottomButtons import BottomButtons
+from customWidgets.buttons.videoButton import VideoButton
+from customWidgets.buttons.voiceButton import VoiceButton
 from customWidgets.frames.gamesFrame import GamesFrame
 
 style = """
@@ -55,14 +57,18 @@ class MainWindow(QMainWindow):
         self.readTheme()
         self.gamesFrame = GamesFrame(self.centralWidget, self.theme)
         self.bottomButtons = BottomButtons(self.centralWidget, self.theme)
+        self.voiceButton = VoiceButton(self.centralWidget)
+        self.videoButton = VideoButton(self.centralWidget)
         self.logoLabel = QLabel(self.centralWidget)
         self.audioManager = AudioManager()
         self.voiceManager = VoiceManager()
         self.videoManager = VideoManager()
         self.voiceThread = threading.Thread(target=self.voiceManager.start)
         self.voiceThread.start()
-        self.videoThread = threading.Thread(target=self.videoManager.startStream)
-        self.videoThread.start()
+        # self.videoThread = threading.Thread(target=self.videoManager.startStream)
+        # self.videoThread.start()
+        self.videoThread = None
+        self.videoOn = False
         self.setCentralWidget(self.centralWidget)
         self.setupUi()
 
@@ -73,7 +79,8 @@ class MainWindow(QMainWindow):
                                         secondary_variant_color=self.theme['secondary-variant'],
                                         on_secondary=self.theme['on-secondary'],
                                         on_primary=self.theme['on-primary']))
-
+        self.voiceButton.setButtonStyle(self.theme['secondary'], self.theme['on-secondary'], self.theme['border-color'])
+        self.videoButton.setButtonStyle(self.theme['secondary'], self.theme['on-secondary'], self.theme['border-color'])
         self.bottomButtons.exit_click_signal.connect(lambda: self.onExitClick())
         self.bottomButtons.settings_click_signal.connect(lambda: self.onSettingsClick())
         self.gamesFrame.onGameClick_signal.connect(lambda: self.onGameClick())
@@ -87,6 +94,10 @@ class MainWindow(QMainWindow):
         self.logoLabel.setGeometry(60, 70, 400, 70)
         self.logoLabel.setStyleSheet("color: {0}".format(self.theme['on-primary']))
         self.showFullScreen()
+
+        self.voiceButton.setGeometry(70, 850, 150, 50)
+        self.videoButton.setGeometry(300, 850, 150, 50)
+        self.videoButton.click_signal.connect(lambda: self.onVideoClick())
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Qt.Key_Escape:
@@ -118,6 +129,19 @@ class MainWindow(QMainWindow):
     @QtCore.pyqtSlot()
     def onGameClick(self):
         self.audioManager.playSoundButtonClick()
+
+    @QtCore.pyqtSlot()
+    def onVideoClick(self):
+        if self.videoOn:
+            print("Video off")
+            self.videoManager.runFlag = False
+            self.videoOn = False
+        else:
+            print("Video on")
+            self.videoManager.runFlag = True
+            self.videoThread = threading.Thread(target=self.videoManager.startStream)
+            self.videoThread.start()
+            self.videoOn = True
 
 
 def kill_proc_tree(pid, including_parent=True):

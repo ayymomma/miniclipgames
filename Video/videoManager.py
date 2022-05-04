@@ -2,6 +2,7 @@ import os
 import cv2
 import pyautogui
 from PyQt5.QtCore import QObject
+pyautogui.FAILSAFE = False
 
 
 class VideoManager(QObject):
