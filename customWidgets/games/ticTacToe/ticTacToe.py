@@ -33,8 +33,8 @@ class TicTacToe(QDialog):
         self.botInfo = PlayerInfo(self, "B.png", "O", "Bot", theme)
         self.playerState = QLabel(self)
         self.botState = QLabel(self)
-        self.voiceManager = VoiceManager()
-        self.voiceManager.cell_position_signal.connect(self.board.buttonClick)
+        # self.voiceManager = VoiceManager()
+        # self.voiceManager.cell_position_signal.connect(lambda position: self.board.buttonClick(position))
         self.setupUi(theme)
 
     def setupUi(self, theme):
@@ -62,13 +62,13 @@ class TicTacToe(QDialog):
     def setWinner(self, value):
         if value == "Player win":
             self.playerState.setText("Winner")
-            threading.Thread(target=self.voiceManager.textToSpeech, args=("Player win", )).start()
+            # threading.Thread(target=self.voiceManager.textToSpeech, args=("Player win", )).start()
             self.botState.setText("Loser")
             return
         if value == "Computer win":
             self.playerState.setText("Loser")
             self.botState.setText("Winner")
-            threading.Thread(target=self.voiceManager.textToSpeech, args=("Computer win", )).start()
+            # threading.Thread(target=self.voiceManager.textToSpeech, args=("Computer win", )).start()
             return
         self.playerState.setText("Tie")
         self.botState.setText("Tie")

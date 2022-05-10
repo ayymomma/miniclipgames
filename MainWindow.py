@@ -63,12 +63,14 @@ class MainWindow(QMainWindow):
         self.audioManager = AudioManager()
         self.voiceManager = VoiceManager()
         self.videoManager = VideoManager()
-        self.voiceThread = threading.Thread(target=self.voiceManager.start)
-        self.voiceThread.start()
+        # self.voiceThread = threading.Thread(target=self.voiceManager.start)
+        # self.voiceThread.start()
         # self.videoThread = threading.Thread(target=self.videoManager.startStream)
         # self.videoThread.start()
         self.videoThread = None
+        self.voiceThread = None
         self.videoOn = False
+        self.voiceOn = False
         self.setCentralWidget(self.centralWidget)
         self.setupUi()
 
@@ -98,6 +100,9 @@ class MainWindow(QMainWindow):
         self.voiceButton.setGeometry(70, 850, 150, 50)
         self.videoButton.setGeometry(300, 850, 150, 50)
         self.videoButton.click_signal.connect(lambda: self.onVideoClick())
+        self.voiceButton.click_signal.connect(lambda: self.onVoiceClick())
+
+        self.voiceManager.cell_position_signal.connect(lambda position: self.gamesFrame.normalGames.ticTacToe.board.buttonClick(position))
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Qt.Key_Escape:
@@ -114,9 +119,9 @@ class MainWindow(QMainWindow):
         if QMessageBox.question(self, ' ',
                                 quit_message, QMessageBox.Yes, QMessageBox.No) == QMessageBox.Yes:
             self.audioManager.playSoundButtonClick()
-            self.voiceManager.quitFlag = False
+            self.voiceManager.runFlag = False
             self.videoManager.runFlag = False
-            print(self.voiceManager.quitFlag)
+            print(self.voiceManager.runFlag)
             time.sleep(0.2)
             sys.exit(0)
         else:
@@ -142,6 +147,19 @@ class MainWindow(QMainWindow):
             self.videoThread = threading.Thread(target=self.videoManager.startStream)
             self.videoThread.start()
             self.videoOn = True
+
+    @QtCore.pyqtSlot()
+    def onVoiceClick(self):
+        if self.voiceOn:
+            print("Voice off")
+            self.voiceManager.runFlag = False
+            self.voiceOn = False
+        else:
+            print("Voice on")
+            self.voiceManager.runFlag = True
+            self.voiceThread = threading.Thread(target=self.voiceManager.start)
+            self.voiceThread.start()
+            self.voiceOn = True
 
 
 def kill_proc_tree(pid, including_parent=True):

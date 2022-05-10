@@ -9,7 +9,7 @@ class VoiceManager(QObject):
     cell_position_signal = pyqtSignal(int)
     reset_signal = pyqtSignal()
     indexList = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-    quitFlag = False
+    runFlag = False
 
     def __init__(self):
         super(VoiceManager, self).__init__()
@@ -47,20 +47,20 @@ class VoiceManager(QObject):
     def start(self):
         action = 'waiting'
         print(action)
-        self.quitFlag = True
-        while self.quitFlag:
+        self.runFlag = True
+        while self.runFlag:
             text = self.speechToText()
             print("----new command----")
             if not text["success"] and text["error"] == "API unavailable":
                 print("ERROR: {}\nclose program".format(text["error"]))
                 break
             while not text["success"]:
-                if not self.quitFlag:
+                if not self.runFlag:
                     return
                 print("I didn't catch that. What did you say?\n")
                 text = self.speechToText()
             if text["transcription"].lower() == "exit":
-                self.quitFlag = False
+                self.runFlag = False
 
             print(text["transcription"].lower())
 
@@ -73,9 +73,8 @@ class VoiceManager(QObject):
                 self.textToSpeech(text["transcription"].lower())
                 print(text["transcription"].lower())
                 if text["transcription"].lower() in self.indexList:
-                    print("am intrat in if")
+                    print("test")
                     self.cell_position_signal.emit(self.indexList.index(text["transcription"].lower()))
-                    print("am iesit din if")
                 if text["transcription"].lower() == 'reset':
                     self.reset_signal.emit()
                 if "stop" in text["transcription"].lower():
