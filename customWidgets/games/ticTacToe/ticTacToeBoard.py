@@ -1,5 +1,6 @@
 import random
 
+from PyQt5 import QtGui
 from PyQt5.QtCore import QRect, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QGridLayout, QPushButton
 
@@ -33,7 +34,6 @@ class TicTacToeBoard(QFrame):
         self.freeCells = []
         self.winner = None
         self.audioManager = AudioManager()
-        # self.voiceManager = VoiceManager()
         self.setupUi(theme)
 
     def setupUi(self, theme):
@@ -45,9 +45,7 @@ class TicTacToeBoard(QFrame):
             self.cells[i].click_signal.connect(lambda value: self.buttonClick(value))
             self.freeCells.append(i)
 
-        # self.voiceManager.reset_signal.connect(lambda: self.reset())
-        # self.voiceManager.cell_position_signal.connect(lambda index: self.buttonClick(index))
-
+        self.audioManager.ticTacToePlaySound()
         self.layout.addWidget(self.cells[0], 0, 0)
         self.layout.addWidget(self.cells[1], 0, 1)
         self.layout.addWidget(self.cells[2], 0, 2)
@@ -74,6 +72,7 @@ class TicTacToeBoard(QFrame):
             self.cells[i].setEnabled(False)
 
     def buttonClick(self, index):
+        self.audioManager.playSoundButtonClick()
         print("semnal" + " " + str(index))
         self.cells[index].capture("X")
         self.freeCells.remove(index)
@@ -116,3 +115,6 @@ class TicTacToeBoard(QFrame):
                 self.winner = "Computer win"
             return True
         return False
+
+    def close(self):
+        self.audioManager.process.terminate()
