@@ -1,0 +1,28 @@
+Laborator 2:
+
+grup tinta: jucatorii pasionati de jocuri de tip "board games"
+nevoi grup tinta: jocuri simple si interactive pentru timpul liber
+operatiile efectuate cel mai des:
+modalitatea de interactiunea ergonomica:
+    - interactiunea fizica folosind un mouse
+    - interactiune audio folosind un microfon
+    - interactiunea video folosind un dispozitiv video
+
+Laborator 3:
+
+personas:
+    1. jucator care doreste sa se joace folosind mouse
+    2. jucator care doreste sa se joace folosind microfonul
+    3. jucator care doreste sa se joace folosind dispozitivul video
+
+scenarii:
+    1. simplu: jucatorul deschide aplicatia, alege jocul dorit si foloseste mouse ul pentru a selecta casutele de pe tabla
+
+    2. interactiv: jucatorul deschide aplicatia, selecteaza butonul de video pentru a porni interactiunea video, alege jocul
+        dorit folosind interactiunea video sau mouse ul si selecteaza casutele de pe tabla folosind interactiunea video sau mouse
+
+    3. interactiv: jucatorul deschide aplicatia, selecteaza butonul de audio pentru a porni interactiunea audio, alege jocul
+        dorit folosind interactiunea audio sau mouse ul si selecteaza casutele de pe tabla folosind interactiunea audio
+
+    4. interactiv: jucatorul deschide aplicatia, selecteaza atat butonul video cat si cel audio, alege jocul dorit folosind
+        interactiunea video si audio sau mouse ul si selecteaza casutele de pe tabla folosind interactiunea video si audio sau mouse
